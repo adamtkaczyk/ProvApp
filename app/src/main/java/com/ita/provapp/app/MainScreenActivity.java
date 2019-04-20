@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.KeyEvent;
 
@@ -35,11 +37,12 @@ public class MainScreenActivity extends AppCompatActivity {
 
         accountManager = AccountManager.get(this);
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null)
-            token = bundle.getString("token");
+        ProvApplication app = (ProvApplication)getApplicationContext();
 
-        showMessage(token);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nv);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.nav_header_textView);
+        navUsername.setText(app.getLoginUser().getUsername());
 
         dl = (DrawerLayout)findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);

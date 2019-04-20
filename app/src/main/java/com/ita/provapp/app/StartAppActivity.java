@@ -18,10 +18,10 @@ public class StartAppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_app);
+        //final ProvApplication app = (ProvApplication)getApplicationContext();
 
         accountManager = AccountManager.get(this);
         Bundle options = new Bundle();
-
 
         final AccountManagerFuture<Bundle> future = accountManager.getAuthTokenByFeatures(AccountGeneral.ACCOUNT_TYPE, AccountGeneral.AUTHTOKEN_TYPE_FULL_ACCESS, null, this, null, null,
                 new AccountManagerCallback<Bundle>() {
@@ -31,10 +31,12 @@ public class StartAppActivity extends AppCompatActivity {
                         try {
                             bnd = future.getResult();
                             final String token = bnd.getString(AccountManager.KEY_AUTHTOKEN);
+                            final String name = bnd.getString(AccountManager.KEY_ACCOUNT_NAME);
+
+                            ProvApplication app = (ProvApplication)getApplicationContext();
+                            app.setLoginUser(new User(name,token));
+
                             Intent myIntent = new Intent(StartAppActivity.this, MainScreenActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("token", token);
-                            myIntent.putExtras(bundle);
                             StartAppActivity.this.startActivity(myIntent);
                         } catch (Exception e) {
 
