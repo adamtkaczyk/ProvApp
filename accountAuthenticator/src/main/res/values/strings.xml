@@ -1,8 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ProvApp</string>
-    <string name="title_activity_authenticator">Sign in</string>
+    <string name="app_name">AccountAuthenticator</string>
+    <string name="label">ProvApp</string>
+
+    <string name="signup_title">Create new account</string>
+    <string name="login_label">Log in</string>
+    <string name="title_activity_login">Sign in</string>
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="prompt_login">Login</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -13,6 +18,4 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="Close">Close</string>
-    <string name="Open">Open</string>
 </resources>

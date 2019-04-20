@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
+                       android:accountType="com.ita.provapp.authenticator"
+                       android:icon="@drawable/ic_provapp"
+                       android:smallIcon="@drawable/ic_provapp"
+                       android:label="@string/label"
+                       android:accountPreferences="@xml/prefs"/>
