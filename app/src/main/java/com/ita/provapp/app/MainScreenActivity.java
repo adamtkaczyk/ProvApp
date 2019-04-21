@@ -25,10 +25,9 @@ import com.ita.provapp.app.R;
 public class MainScreenActivity extends AppCompatActivity {
 
     private AccountManager accountManager;
-    private String token;
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
-    private NavigationView nv;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +38,12 @@ public class MainScreenActivity extends AppCompatActivity {
 
         ProvApplication app = (ProvApplication)getApplicationContext();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nv);
+        navigationView = (NavigationView) findViewById(R.id.nv);
         View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.nav_header_textView);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.nav_header_username);
+        TextView navEmail = (TextView) headerView.findViewById(R.id.nav_header_email);
         navUsername.setText(app.getLoginUser().getUsername());
+        navEmail.setText(app.getLoginUser().getEmail());
 
         dl = (DrawerLayout)findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
@@ -52,8 +53,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        nv = (NavigationView)findViewById(R.id.nv);
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
@@ -61,13 +61,17 @@ public class MainScreenActivity extends AppCompatActivity {
                 {
                     case R.id.account:
                         Toast.makeText(MainScreenActivity.this, "My Account",Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.settings:
                         Toast.makeText(MainScreenActivity.this, "Settings",Toast.LENGTH_SHORT).show();
-                    case R.id.mycart:
-                        Toast.makeText(MainScreenActivity.this, "My Cart",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.logout:
+                        logOut();
+                        break;
                     default:
                         return true;
                 }
+                return true;
             }
         });
     }
@@ -93,7 +97,7 @@ public class MainScreenActivity extends AppCompatActivity {
         });
     }
 
-    public void logOut(android.view.View button) {
+    public void logOut() {
         final Account availableAccounts[] = accountManager.getAccountsByType(AccountGeneral.ACCOUNT_TYPE);
         final Account account = availableAccounts[0];
 

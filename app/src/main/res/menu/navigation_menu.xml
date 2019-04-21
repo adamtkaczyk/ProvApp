@@ -2,10 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/account"
-        android:title="My Account"/>
+        android:title="My Account"
+        android:icon="@drawable/ic_my_account"/>
     <item android:id="@+id/settings"
-        android:title="Settings"/>
-    <item android:id="@+id/mycart"
-        android:title="My Cart"/>
+        android:title="Settings"
+        android:icon="@drawable/ic_setting"/>
+    <item android:id="@+id/logout"
+        android:title="Log out"/>
 
 </menu>

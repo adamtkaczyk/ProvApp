@@ -2,6 +2,7 @@ package com.ita.provapp.app;
 
 public class User {
     private String username;
+    private String email = "example@email.com";
     private String token;
 
     public User(String username, String token) {
@@ -23,5 +24,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
