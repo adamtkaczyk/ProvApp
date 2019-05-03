@@ -9,6 +9,8 @@ import android.os.Bundle;
 
 import com.ita.provapp.app.R;
 import com.ita.provapp.authenticator.AccountGeneral;
+import com.ita.provapp.authenticator.LoginUser;
+import com.ita.provapp.authenticator.User;
 
 public class StartAppActivity extends AppCompatActivity {
 
@@ -34,7 +36,7 @@ public class StartAppActivity extends AppCompatActivity {
                             final String name = bnd.getString(AccountManager.KEY_ACCOUNT_NAME);
 
                             ProvApplication app = (ProvApplication)getApplicationContext();
-                            app.setLoginUser(new User(name,token));
+                            app.setLoginUser(new LoginUser(new User(name,"","","example@gmail.com"),token));
 
                             Intent myIntent = new Intent(StartAppActivity.this, MainScreenActivity.class);
                             StartAppActivity.this.startActivity(myIntent);

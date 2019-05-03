@@ -57,9 +57,10 @@ public class ParseComServerAuthenticate implements ServerAuthenticate{
     }
 
     @Override
-    public String userSignIn(String user, String pass, String authType) throws Exception {
-
-        Log.d("udini", "userSignIn");
+    public LoginUser userSignIn(String user, String pass, String authType) throws Exception {
+        LoginUser u = null;
+        return u;
+        /*Log.d("udini", "userSignIn");
 
         DefaultHttpClient httpClient = new DefaultHttpClient();
         String url = "https://api.parse.com/1/login";
@@ -101,7 +102,7 @@ public class ParseComServerAuthenticate implements ServerAuthenticate{
             e.printStackTrace();
         }
 
-        return authtoken;
+        return authtoken;*/
     }
 
 

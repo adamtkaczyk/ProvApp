@@ -64,7 +64,8 @@ public class ProvAppAuthenticator extends AbstractAccountAuthenticator {
             if (password != null) {
                 try {
                     Log.d("provapp", TAG + "> re-authenticating with the existing password");
-                    authToken = sServerAuthenticate.userSignIn(account.name, password, authTokenType);
+                    LoginUser user = sServerAuthenticate.userSignIn(account.name, password, authTokenType);
+                    authToken = user.getAuthtoken();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

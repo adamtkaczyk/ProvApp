@@ -302,6 +302,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
     }
 
+    public void onRegisterButton(android.view.View button) {
+        Intent myIntent = new Intent(AuthenticatorActivity.this, SignUpActivity.class);
+        AuthenticatorActivity.this.startActivity(myIntent);
+    }
+
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         /*ArrayAdapter<String> adapter =
@@ -395,15 +400,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
         @Override
         protected Intent doInBackground(Void... params) {
-
-            String authtoken = null;
             Bundle data = new Bundle();
             try {
-                authtoken = sServerAuthenticate.userSignIn(userName, userPass, mAuthTokenType);
+                LoginUser loginUser = sServerAuthenticate.userSignIn(userName, userPass, mAuthTokenType);
+                //ProvApplication app = (ProvApplication)getApplicationContext();
 
                 data.putString(AccountManager.KEY_ACCOUNT_NAME, userName);
                 data.putString(AccountManager.KEY_ACCOUNT_TYPE, accountType);
-                data.putString(AccountManager.KEY_AUTHTOKEN, authtoken);
+                data.putString(AccountManager.KEY_AUTHTOKEN, loginUser.getAuthtoken());
                 data.putString(PARAM_USER_PASS, userPass);
 
             } catch (Exception e) {

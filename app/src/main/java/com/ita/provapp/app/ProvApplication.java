@@ -2,10 +2,11 @@ package com.ita.provapp.app;
 
 import android.app.Application;
 import android.content.Context;
+import com.ita.provapp.authenticator.LoginUser;
 
 public class ProvApplication extends Application {
     private static Context mContext;
-    User loginUser;// = new User();
+    LoginUser loginUser;// = new User();
 
     public static Context getContext() {
         return mContext;
@@ -17,11 +18,11 @@ public class ProvApplication extends Application {
         mContext = getApplicationContext();
     }
 
-    public User getLoginUser() {
+    public LoginUser getLoginUser() {
         return loginUser;
     }
 
-    public void setLoginUser(User loginUser) {
+    public void setLoginUser(LoginUser loginUser) {
         this.loginUser = loginUser;
     }
 }

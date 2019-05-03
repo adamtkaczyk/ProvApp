@@ -1,5 +1,7 @@
 package com.ita.provapp.authenticator;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
@@ -15,42 +17,42 @@ import java.io.Serializable;
 
 public class ProvAppServerAuthenticate implements ServerAuthenticate {
     @Override
-    public String userSignIn(String username, String pass, String authType) throws Exception {
+    public LoginUser userSignIn(String username, String pass, String authType) throws Exception {
 
-        String url = "https://a9dd8dba-cd37-42aa-8a2c-03a009d511d3.mock.pstmn.io/user/authtoken";
+        String url = "http://192.168.1.14:8080/user/authtoken";
 
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
 
         //httpPost.addHeader("X-Parse-Application-Id","XUafJTkPikD5XN5HxciweVuSe12gDgk2tzMltOhr");
         //httpPost.addHeader("X-Parse-REST-API-Key", "8L9yTQ3M86O4iiucwWb4JS7HkxoSKo7ssJqGChWx");
-        //httpPost.addHeader("Content-Type", "application/json");
+        httpPost.addHeader("Content-Type", "application/json");
 
-        String user = "{\"user\":\"" + username + "\",\"password\":\"" + pass + "\"}";
-        HttpEntity entity = new StringEntity(user);
+        String credentialJson = "{\"user\":\"" + username + "\",\"password\":\"" + pass + "\"}";
+        HttpEntity entity = new StringEntity(credentialJson);
         httpPost.setEntity(entity);
 
-        String authtoken = null;
+        System.out.println("Sing in try, json = " + credentialJson);
+
+        LoginUser user = null;
         try {
             HttpResponse response = httpClient.execute(httpPost);
             String responseString = EntityUtils.toString(response.getEntity());
 
-            System.out.println(responseString);
+            System.out.println("Response message: " + responseString);
 
             if (response.getStatusLine().getStatusCode() != 201) {
                 ProvAppServerAuthenticate.ParseComError error = new Gson().fromJson(responseString, ParseComError.class);
                 throw new Exception("Error creating user["+error.code+"] - " + error.error);
             }
 
-            Authtoken token = new Gson().fromJson(responseString, Authtoken.class);
-
-            authtoken = token.authtoken;
+            user = new Gson().fromJson(responseString, LoginUser.class);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return authtoken;
+        return user;
     }
 
     @Override
@@ -108,94 +110,7 @@ public class ProvAppServerAuthenticate implements ServerAuthenticate {
         String error;
     }
 
-    private class Authtoken implements Serializable {
-        @Expose
-        public String authtoken;
-
-        public String getauthtoken() {
-            return authtoken;
-        }
-
-        public void setauthtoken(String authtoken) {
-            this.authtoken = authtoken;
-        }
-    }
-
-    private class User implements Serializable {
-
-        private String firstName;
-        private String lastName;
-        private String username;
-        private String phone;
-        private String objectId;
-        public String sessionToken;
-        private String gravatarId;
-        private String avatarUrl;
 
 
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPhone() {
-            return phone;
-        }
-
-        public void setPhone(String phone) {
-            this.phone = phone;
-        }
-
-        public String getObjectId() {
-            return objectId;
-        }
-
-        public void setObjectId(String objectId) {
-            this.objectId = objectId;
-        }
-
-        public String getSessionToken() {
-            return sessionToken;
-        }
-
-        public void setSessionToken(String sessionToken) {
-            this.sessionToken = sessionToken;
-        }
-
-        public String getGravatarId() {
-            return gravatarId;
-        }
-
-        public void setGravatarId(String gravatarId) {
-            this.gravatarId = gravatarId;
-        }
-
-        public String getAvatarUrl() {
-            return avatarUrl;
-        }
-
-        public void setAvatarUrl(String avatarUrl) {
-            this.avatarUrl = avatarUrl;
-        }
-    }
 }
 
