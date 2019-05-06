@@ -30,6 +30,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ita.provapp.common.LoginUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -403,7 +405,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
             Bundle data = new Bundle();
             try {
                 LoginUser loginUser = sServerAuthenticate.userSignIn(userName, userPass, mAuthTokenType);
-                //ProvApplication app = (ProvApplication)getApplicationContext();
 
                 data.putString(AccountManager.KEY_ACCOUNT_NAME, userName);
                 data.putString(AccountManager.KEY_ACCOUNT_TYPE, accountType);
@@ -423,6 +424,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
         protected void onPostExecute(Intent intent) {
             if (intent.hasExtra(KEY_ERROR_MESSAGE)) {
                 Toast.makeText(getBaseContext(), intent.getStringExtra(KEY_ERROR_MESSAGE), Toast.LENGTH_SHORT).show();
+                mPasswordView = (EditText) findViewById(R.id.password);
+                mPasswordView.setText("");
+                mAuthTask = null;
+                showProgress(false);
             } else {
                 finishLogin(intent);
             }

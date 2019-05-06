@@ -1,4 +1,4 @@
-package com.ita.provapp.authenticator;
+package com.ita.provapp.common;
 
 import java.io.Serializable;
 

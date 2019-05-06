@@ -31,4 +31,5 @@ dependencies {
     implementation files('../libs/additionnal.jar')
     implementation files('../libs/mail.jar')
     implementation project(':accountAuthenticator')
+    implementation project(':provappcommon')
 }

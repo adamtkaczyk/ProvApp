@@ -2,7 +2,7 @@ package com.ita.provapp.app;
 
 import android.app.Application;
 import android.content.Context;
-import com.ita.provapp.authenticator.LoginUser;
+import com.ita.provapp.common.LoginUser;
 
 public class ProvApplication extends Application {
     private static Context mContext;

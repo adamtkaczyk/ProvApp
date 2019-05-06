@@ -20,7 +20,6 @@ import android.widget.Toast;
 import android.view.KeyEvent;
 
 import com.ita.provapp.authenticator.AccountGeneral;
-import com.ita.provapp.app.R;
 
 public class MainScreenActivity extends AppCompatActivity {
 
