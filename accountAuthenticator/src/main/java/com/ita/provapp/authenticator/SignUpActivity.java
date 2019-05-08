@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ita.provapp.common.NewUser;
+
 import static com.ita.provapp.authenticator.AccountGeneral.sServerAuthenticate;
 import static com.ita.provapp.authenticator.AuthenticatorActivity.ARG_ACCOUNT_TYPE;
 import static com.ita.provapp.authenticator.AuthenticatorActivity.KEY_ERROR_MESSAGE;
@@ -55,9 +57,12 @@ public class SignUpActivity extends Activity {
 
         new AsyncTask<String, Void, Intent>() {
 
+            String username = ((TextView) findViewById(R.id.username)).getText().toString().trim();
+            String email = ((TextView) findViewById(R.id.email)).getText().toString().trim();
             String name = ((TextView) findViewById(R.id.name)).getText().toString().trim();
-            String accountName = ((TextView) findViewById(R.id.accountName)).getText().toString().trim();
-            String accountPassword = ((TextView) findViewById(R.id.accountPassword)).getText().toString().trim();
+            String surname = ((TextView) findViewById(R.id.surname)).getText().toString().trim();
+            String password = ((TextView) findViewById(R.id.password)).getText().toString().trim();
+            String passwordConfirm = ((TextView) findViewById(R.id.passwordConfim)).getText().toString().trim();
 
             @Override
             protected Intent doInBackground(String... params) {
@@ -67,12 +72,13 @@ public class SignUpActivity extends Activity {
                 String authtoken = null;
                 Bundle data = new Bundle();
                 try {
-                    authtoken = sServerAuthenticate.userSignUp(name, accountName, accountPassword, AccountGeneral.AUTHTOKEN_TYPE_FULL_ACCESS);
+                    NewUser user = new NewUser(username, email, name, surname, password);
+                    authtoken = sServerAuthenticate.userSignUp(user);
 
-                    data.putString(AccountManager.KEY_ACCOUNT_NAME, accountName);
+                    data.putString(AccountManager.KEY_ACCOUNT_NAME, username);
                     data.putString(AccountManager.KEY_ACCOUNT_TYPE, mAccountType);
                     data.putString(AccountManager.KEY_AUTHTOKEN, authtoken);
-                    data.putString(PARAM_USER_PASS, accountPassword);
+                    data.putString(PARAM_USER_PASS, password);
                 } catch (Exception e) {
                     data.putString(KEY_ERROR_MESSAGE, e.getMessage());
                 }

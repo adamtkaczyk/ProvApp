@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ita.provapp.app.StartAppActivity">
+    tools:context="com.ita.provapp.app.StartAppActivity"
+    android:theme="@android:style/Theme.NoTitleBar">
 
 </android.support.constraint.ConstraintLayout>

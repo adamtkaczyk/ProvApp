@@ -7,7 +7,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -18,10 +17,10 @@ public interface ProvAppService {
     Call<User> getUser(@Header("Authorization") String token, @Path("userId") String userId);
 
     @POST("user/authtoken")
-    Call<LoginUser> SingIn(@Body Credential credential);
+    Call<LoginUser> signIn(@Body Credential credential);
 
     @POST("user")
-    Call<ResponseBody> SignUp(@Body NewUser user);
+    Call<ResponseBody> signUp(@Body NewUser user);
 
     @GET("product/{productId}")
     Call<Product> getProduct(@Path("productId") String productId);

@@ -4,15 +4,16 @@ import com.google.gson.Gson;
 import com.ita.provapp.common.Credential;
 import com.ita.provapp.common.ErrorMessage;
 import com.ita.provapp.common.LoginUser;
+import com.ita.provapp.common.NewUser;
 import com.ita.provapp.common.ProvAppService;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 public class ProvAppServerAuthenticate implements ServerAuthenticate {
 
@@ -32,7 +33,7 @@ public class ProvAppServerAuthenticate implements ServerAuthenticate {
             Credential credential = new Credential();
             credential.setUser(username);
             credential.setPassword(password);
-            Call<LoginUser> call = service.SingIn(credential);
+            Call<LoginUser> call = service.signIn(credential);
 
             Response<LoginUser> response = call.execute();
 
@@ -52,9 +53,29 @@ public class ProvAppServerAuthenticate implements ServerAuthenticate {
     }
 
     @Override
-    public String userSignUp(String name, String email, String pass, String authType) throws Exception {
+    public String userSignUp(final NewUser user) throws Exception {
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(url)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        return "";
+            ProvAppService service = retrofit.create(ProvAppService.class);
+
+            Call<ResponseBody> call = service.signUp(user);
+
+            Response<ResponseBody> response = call.execute();
+
+            if(response.code() != 201) {
+                Gson gson = new Gson();
+                ErrorMessage loginError = gson.fromJson(response.errorBody().string(),ErrorMessage.class);
+
+                throw new Exception("Error sign in [" + response.code() + "]: " + loginError.getMessage());
+            }
+        } catch (IOException e) {
+            throw new Exception("Error sign in: " + e.getMessage());
+        }
+        return "123";
     }
 }
 

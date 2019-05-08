@@ -41,8 +41,7 @@ public class MainScreenActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.nav_header_username);
         TextView navEmail = (TextView) headerView.findViewById(R.id.nav_header_email);
-        navUsername.setText(app.getLoginUser().getUser().getUsername() + " - " + app.getLoginUser().getUser().getName()
-        + " " + app.getLoginUser().getUser().getSurname());
+        navUsername.setText(app.getLoginUser().getUser().getUsername());
         navEmail.setText(app.getLoginUser().getUser().getEmail());
 
         dl = (DrawerLayout)findViewById(R.id.activity_main);

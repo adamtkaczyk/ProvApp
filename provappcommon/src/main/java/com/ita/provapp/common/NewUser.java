@@ -6,7 +6,7 @@ public class NewUser extends User implements Serializable {
 
     private String password;
 
-    public NewUser(String username, String name, String surname, /*Date dateOfBirth,*/ String email, String password) {
+    public NewUser(String username, String email, String name, String surname, /*Date dateOfBirth,*/ String password) {
         super(username, name, surname, email);
         this.password = password;
     }
