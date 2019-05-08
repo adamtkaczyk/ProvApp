@@ -56,11 +56,5 @@ public class ProvAppServerAuthenticate implements ServerAuthenticate {
 
         return "";
     }
-
-
-    private class ParseComError implements Serializable {
-        int code;
-        String error;
-    }
 }
 

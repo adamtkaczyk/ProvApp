@@ -19,7 +19,6 @@ public class ProvAppAuthenticator extends AbstractAccountAuthenticator {
     public ProvAppAuthenticator(Context context) {
         super(context);
 
-        // I hate you! Google - set mContext as protected!
         this.mContext = context;
     }
 
