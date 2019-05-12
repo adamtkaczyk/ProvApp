@@ -1,5 +1,7 @@
 package com.ita.provapp.common;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -10,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AccountAPIClient {
     final String url = "http://192.168.1.14:8080/";
 
-    public User getUser(String token, String userId) {
+    public User getUser(String token, String userId) throws Exception{
         User user = null;
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -26,12 +28,16 @@ public class AccountAPIClient {
             if(response.isSuccessful()) {
                 user = response.body();
             } else {
-                System.out.println("response is not successful");
+                Gson gson = new Gson();
+                ErrorMessage loginError = gson.fromJson(response.errorBody().string(),ErrorMessage.class);
+                throw new Exception("Error to get user: " + loginError.getMessage());
+               // System.out.println("response is not successful");
                 //TODO: Error handling
             }
         } catch (IOException e) {
+            throw new Exception("Error with connection to server.");
             //TODO: Error handle
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return user;

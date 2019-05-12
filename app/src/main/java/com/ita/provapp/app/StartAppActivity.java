@@ -40,47 +40,16 @@ public class StartAppActivity extends AppCompatActivity {
                             final String token = bnd.getString(AccountManager.KEY_AUTHTOKEN);
                             final String username = bnd.getString(AccountManager.KEY_ACCOUNT_NAME);
 
-                            GetUserTask task = new GetUserTask(username,token,"Full Access");
-                            task.execute();
-
-                            Intent myIntent = new Intent(StartAppActivity.this, MainScreenActivity.class);
-                            StartAppActivity.this.startActivity(myIntent);
+                            Intent intent = new Intent(StartAppActivity.this, MainScreenActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("token", token);
+                            bundle.putString("username", username);
+                            intent.putExtras(bundle);
+                            StartAppActivity.this.startActivity(intent);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }, null);
-    }
-
-    public class GetUserTask extends AsyncTask<Void, Void, Intent> {
-
-        private final String username;
-        private final String token;
-        private final String accountType;
-
-        GetUserTask(String username, String token, String type) {
-            this.username = username;
-            this.token = token;
-            this.accountType = type;
-        }
-
-        @Override
-        protected Intent doInBackground(Void... params) {
-            //Bundle data = new Bundle();
-
-            AccountAPIClient accountAPIClient = new AccountAPIClient();
-            User user = accountAPIClient.getUser(token,username);
-            ProvApplication app = (ProvApplication)getApplicationContext();
-            app.setLoginUser(new LoginUser(user,token));
-
-            final Intent res = new Intent();
-            //res.putExtras(data);
-            return res;
-        }
-
-        @Override
-        protected void onPostExecute(Intent intent) {
-
-        }
     }
 }

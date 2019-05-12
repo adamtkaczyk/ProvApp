@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,11 @@ import android.widget.Toast;
 import android.view.KeyEvent;
 
 import com.ita.provapp.authenticator.AccountGeneral;
+import com.ita.provapp.common.AccountAPIClient;
+import com.ita.provapp.common.LoginUser;
+import com.ita.provapp.common.User;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainScreenActivity extends AppCompatActivity {
 
@@ -33,46 +39,59 @@ public class MainScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        accountManager = AccountManager.get(this);
+        try {
+            accountManager = AccountManager.get(this);
 
-        ProvApplication app = (ProvApplication)getApplicationContext();
+            Bundle bundle = getIntent().getExtras();
+            if(bundle == null)
+                throw new Exception("Cannot get username or token");
 
-        navigationView = (NavigationView) findViewById(R.id.nv);
-        View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.nav_header_username);
-        TextView navEmail = (TextView) headerView.findViewById(R.id.nav_header_email);
-        navUsername.setText(app.getLoginUser().getUser().getUsername());
-        navEmail.setText(app.getLoginUser().getUser().getEmail());
+            String username = bundle.getString("username");
+            String token = bundle.getString("token");
 
-        dl = (DrawerLayout)findViewById(R.id.activity_main);
-        t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
+            GetUserTask task = new GetUserTask(username, token, "Full Access");
+            task.execute().get();
 
-        dl.addDrawerListener(t);
-        t.syncState();
+            ProvApplication app = (ProvApplication) getApplicationContext();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            navigationView = (NavigationView) findViewById(R.id.nv);
+            View headerView = navigationView.getHeaderView(0);
+            TextView navUsername = (TextView) headerView.findViewById(R.id.nav_header_username);
+            TextView navEmail = (TextView) headerView.findViewById(R.id.nav_header_email);
+            navUsername.setText(app.getLoginUser().getUser().getUsername());
+            navEmail.setText(app.getLoginUser().getUser().getEmail());
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch(id)
-                {
-                    case R.id.account:
-                        Toast.makeText(MainScreenActivity.this, "My Account",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.settings:
-                        Toast.makeText(MainScreenActivity.this, "Settings",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.logout:
-                        logOut();
-                        break;
-                    default:
-                        return true;
+            dl = (DrawerLayout) findViewById(R.id.activity_main);
+            t = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
+
+            dl.addDrawerListener(t);
+            t.syncState();
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    int id = item.getItemId();
+                    switch (id) {
+                        case R.id.account:
+                            Toast.makeText(MainScreenActivity.this, "My Account", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.settings:
+                            Toast.makeText(MainScreenActivity.this, "Settings", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.logout:
+                            logOut();
+                            break;
+                        default:
+                            return true;
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+        } catch (Exception e) {
+            logOut();
+        }
     }
 
     private void moveToSummary() {
@@ -131,5 +150,41 @@ public class MainScreenActivity extends AppCompatActivity {
             return true;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class GetUserTask extends AsyncTask<Void, Void, Intent> {
+
+        private final String username;
+        private final String token;
+        private final String accountType;
+
+        GetUserTask(String username, String token, String type) {
+            this.username = username;
+            this.token = token;
+            this.accountType = type;
+        }
+
+        @Override
+        protected Intent doInBackground(Void... params) {
+            //Bundle data = new Bundle();
+            final Intent res = new Intent();
+            try {
+                AccountAPIClient accountAPIClient = new AccountAPIClient();
+                User user = accountAPIClient.getUser(token, username);
+                ProvApplication app = (ProvApplication) getApplicationContext();
+                app.setLoginUser(new LoginUser(user, token));
+
+                //res.putExtras(data);
+            } catch (Exception e) {
+                logOut();
+            }
+
+            return res;
+        }
+
+        @Override
+        protected void onPostExecute(Intent intent) {
+
+        }
     }
 }
