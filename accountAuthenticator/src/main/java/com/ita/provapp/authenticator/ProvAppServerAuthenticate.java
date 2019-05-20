@@ -1,10 +1,10 @@
 package com.ita.provapp.authenticator;
 
 import com.google.gson.Gson;
-import com.ita.provapp.common.Credential;
-import com.ita.provapp.common.ErrorMessage;
-import com.ita.provapp.common.LoginUser;
-import com.ita.provapp.common.NewUser;
+import com.ita.provapp.common.json.Credential;
+import com.ita.provapp.common.json.ErrorMessage;
+import com.ita.provapp.common.json.LoginUser;
+import com.ita.provapp.common.json.NewUser;
 import com.ita.provapp.common.ProvAppService;
 
 import okhttp3.ResponseBody;

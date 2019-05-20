@@ -4,18 +4,10 @@ import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.ita.provapp.authenticator.AccountGeneral;
-import com.ita.provapp.common.AccountAPIClient;
-import com.ita.provapp.common.LoginUser;
-import com.ita.provapp.common.User;
-
-import static com.ita.provapp.authenticator.AccountGeneral.sServerAuthenticate;
 
 public class StartAppActivity extends AppCompatActivity {
 

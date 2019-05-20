@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ita.provapp.common.NewUser;
+import com.ita.provapp.common.json.NewUser;
 
 import static com.ita.provapp.authenticator.AccountGeneral.sServerAuthenticate;
 import static com.ita.provapp.authenticator.AuthenticatorActivity.ARG_ACCOUNT_TYPE;

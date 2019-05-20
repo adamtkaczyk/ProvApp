@@ -1,8 +1,8 @@
 package com.ita.provapp.authenticator;
 
-import com.ita.provapp.common.LoginUser;
-import com.ita.provapp.common.NewUser;
-import com.ita.provapp.common.User;
+import com.ita.provapp.common.json.LoginUser;
+import com.ita.provapp.common.json.NewUser;
+import com.ita.provapp.common.json.User;
 
 public class DummyServerAuthenticate implements ServerAuthenticate {
     @Override

@@ -1,8 +1,9 @@
 package com.ita.provapp.common;
 
 
+import com.ita.provapp.common.json.Product;
+
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import retrofit2.Call;
 import retrofit2.Response;

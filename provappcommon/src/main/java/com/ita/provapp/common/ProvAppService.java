@@ -1,6 +1,12 @@
 package com.ita.provapp.common;
 
 
+import com.ita.provapp.common.json.Credential;
+import com.ita.provapp.common.json.LoginUser;
+import com.ita.provapp.common.json.NewUser;
+import com.ita.provapp.common.json.Product;
+import com.ita.provapp.common.json.User;
+
 import java.util.List;
 
 import okhttp3.ResponseBody;

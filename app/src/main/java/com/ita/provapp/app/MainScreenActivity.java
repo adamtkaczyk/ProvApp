@@ -22,10 +22,11 @@ import android.view.KeyEvent;
 
 import com.ita.provapp.authenticator.AccountGeneral;
 import com.ita.provapp.common.AccountAPIClient;
-import com.ita.provapp.common.LoginUser;
-import com.ita.provapp.common.User;
+import com.ita.provapp.common.exceptions.ServerException;
+import com.ita.provapp.common.json.LoginUser;
+import com.ita.provapp.common.json.User;
 
-import java.util.concurrent.ExecutionException;
+import java.io.IOException;
 
 public class MainScreenActivity extends AppCompatActivity {
 
@@ -175,7 +176,7 @@ public class MainScreenActivity extends AppCompatActivity {
                 app.setLoginUser(new LoginUser(user, token));
 
                 //res.putExtras(data);
-            } catch (Exception e) {
+            } catch (IOException | ServerException e) {
                 logOut();
             }
 

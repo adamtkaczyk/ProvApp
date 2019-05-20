@@ -30,7 +30,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ita.provapp.common.LoginUser;
+import com.ita.provapp.common.json.LoginUser;
 
 import java.util.ArrayList;
 import java.util.List;

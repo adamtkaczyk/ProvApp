@@ -1,4 +1,4 @@
-package com.ita.provapp.common;
+package com.ita.provapp.common.json;
 
 import com.google.gson.annotations.Expose;
 
