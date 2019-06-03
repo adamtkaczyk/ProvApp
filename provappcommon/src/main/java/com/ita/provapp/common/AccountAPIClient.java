@@ -6,7 +6,6 @@ import com.ita.provapp.common.json.ErrorMessage;
 import com.ita.provapp.common.json.User;
 
 import java.io.IOException;
-import java.net.ConnectException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -23,7 +22,7 @@ public class AccountAPIClient {
         this.url = url;
     }
 
-    private String url;
+    final private String url;
 
     public User getUser(String token, String userId) throws IOException, ServerException {
         User user = null;
@@ -44,7 +43,6 @@ public class AccountAPIClient {
                 Gson gson = new Gson();
                 ErrorMessage loginError = gson.fromJson(response.errorBody().string(),ErrorMessage.class);
                 throw new ServerException(loginError);
-               // System.out.println("response is not successful");
             }
         } catch (IOException e) {
             throw new IOException("Error with connection to server: " + url);

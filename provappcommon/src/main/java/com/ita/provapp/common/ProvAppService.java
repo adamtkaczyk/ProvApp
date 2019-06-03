@@ -4,6 +4,7 @@ package com.ita.provapp.common;
 import com.ita.provapp.common.json.Credential;
 import com.ita.provapp.common.json.LoginUser;
 import com.ita.provapp.common.json.NewUser;
+import com.ita.provapp.common.json.Order;
 import com.ita.provapp.common.json.Product;
 import com.ita.provapp.common.json.User;
 
@@ -33,4 +34,7 @@ public interface ProvAppService {
 
     @GET("product")
     Call<List<Product>> listProduct();
+
+    @POST("order")
+    Call<ResponseBody> createOrder(@Header("Authorization") String token, @Body Order order);
 }

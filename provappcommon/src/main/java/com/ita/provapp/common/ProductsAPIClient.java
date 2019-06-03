@@ -1,6 +1,8 @@
 package com.ita.provapp.common;
 
-
+import com.google.gson.Gson;
+import com.ita.provapp.common.exceptions.ServerException;
+import com.ita.provapp.common.json.ErrorMessage;
 import com.ita.provapp.common.json.Product;
 
 import java.io.IOException;
@@ -11,9 +13,18 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductsAPIClient {
-    final String url = "http://192.168.1.14:8080/";
 
-    public Product getProduct(String productId) {
+    public ProductsAPIClient() {
+        this.url = "http://192.168.1.14:8080/";
+    }
+
+    public ProductsAPIClient(String url) {
+        this.url = url;
+    }
+
+    final String url;
+
+    public Product getProduct(String productId) throws IOException, ServerException {
         Product product = null;
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -23,18 +34,18 @@ public class ProductsAPIClient {
 
             ProvAppService service = retrofit.create(ProvAppService.class);
 
-            Call<Product> call = service.getProduct("product1");
+            Call<Product> call = service.getProduct(productId);
 
             Response<Product> response = call.execute();
             if(response.isSuccessful()) {
                 product = response.body();
             } else {
-                System.out.println("response is not successful");
-                //TODO: Error handling
+                Gson gson = new Gson();
+                ErrorMessage error = gson.fromJson(response.errorBody().string(),ErrorMessage.class);
+                throw new ServerException(error);
             }
         } catch (IOException e) {
-            //TODO: Error handle
-            e.printStackTrace();
+            throw new IOException("Error with connection to server: " + url);
         }
 
         return product;
