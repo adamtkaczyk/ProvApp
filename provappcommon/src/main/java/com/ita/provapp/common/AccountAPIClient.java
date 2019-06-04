@@ -9,31 +9,20 @@ import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AccountAPIClient {
+public class AccountAPIClient extends APIClient {
 
     public AccountAPIClient() {
-        this.url = "http://192.168.1.14:8080/";
+        super();
     }
 
     public AccountAPIClient(String url) {
-        this.url = url;
+        super(url);
     }
-
-    final private String url;
 
     public User getUser(String token, String userId) throws IOException, ServerException {
         User user = null;
         try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            ProvAppService service = retrofit.create(ProvAppService.class);
-
             Call<User> call = service.getUser(token, userId);
 
             Response<User> response = call.execute();

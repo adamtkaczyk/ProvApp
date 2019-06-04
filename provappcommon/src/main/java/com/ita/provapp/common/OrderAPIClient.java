@@ -9,40 +9,25 @@ import com.ita.provapp.common.json.Order;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import okhttp3.Headers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class OrderAPIClient {
-
-    final private String url;
+public class OrderAPIClient extends APIClient {
 
     public OrderAPIClient() {
-        this.url = "http://192.168.1.14:8080/";
+        super();
     }
 
     public OrderAPIClient(String url) {
-        this.url = url;
+        super(url);
     }
 
     public Integer createOrder(String authToken, Order order) throws IOException, ServerException {
         Integer orderId = null;
         try {
-            Gson gson = new GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                    .create();
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-
-            ProvAppService service = retrofit.create(ProvAppService.class);
-
             Call<ResponseBody> call = service.createOrder(authToken, order);
 
             Response<ResponseBody> response = call.execute();
