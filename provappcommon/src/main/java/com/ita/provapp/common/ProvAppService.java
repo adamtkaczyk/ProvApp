@@ -20,21 +20,21 @@ import retrofit2.http.Path;
 
 public interface ProvAppService {
 
-    @GET("user/{userId}")
+    @GET("users/{userId}")
     Call<User> getUser(@Header("Authorization") String token, @Path("userId") String userId);
 
-    @POST("user/authtoken")
+    @POST("users/authtokens")
     Call<LoginUser> signIn(@Body Credential credential);
 
-    @POST("user")
+    @POST("users")
     Call<ResponseBody> signUp(@Body NewUser user);
 
-    @GET("product/{productId}")
+    @GET("products/{productId}")
     Call<Product> getProduct(@Path("productId") String productId);
 
-    @GET("product")
+    @GET("products")
     Call<List<Product>> listProduct();
 
-    @POST("order")
+    @POST("orders")
     Call<ResponseBody> createOrder(@Header("Authorization") String token, @Body Order order);
 }

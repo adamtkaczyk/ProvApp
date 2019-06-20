@@ -35,6 +35,7 @@ public class SummaryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     ProvApplication app = (ProvApplication) getApplicationContext();
+                    Order order = new Order();
                     CreateOrderTask task = new CreateOrderTask(app.getLoginUser().getAuthtoken(), new Order(new Date()), "Full Access");
                     task.execute().get();
                 } catch (ExecutionException | InterruptedException e) {

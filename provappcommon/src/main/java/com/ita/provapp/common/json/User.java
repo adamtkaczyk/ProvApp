@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+    public User(Integer userID, String username, String name, String surname, String email) {
+        this(username,name,surname,email);
+        this.userID = userID;
+    }
+
     public User(String username, String name, String surname, String email) {
         this.username = username;
         this.name = name;
@@ -11,6 +16,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    private Integer userID = null;
     private String username;
     private String name;
     private String surname;

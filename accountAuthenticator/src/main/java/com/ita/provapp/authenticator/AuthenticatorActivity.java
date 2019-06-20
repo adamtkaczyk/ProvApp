@@ -219,7 +219,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(login, password,getIntent().getStringExtra(ARG_ACCOUNT_TYPE));
+            mAuthTask = new UserLoginTask(login, password, getIntent().getStringExtra(ARG_ACCOUNT_TYPE));
             mAuthTask.execute((Void) null);
         }
     }
@@ -327,10 +327,12 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
         if (getIntent().getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)) {
             Log.d("provapp", TAG + "> finishLogin > addAccountExplicitly");
+            String authtoken = intent.getStringExtra(AccountManager.KEY_AUTHTOKEN);
 
             // Creating the account on the device and setting the auth token we got
             // (Not setting the auth token will cause another call to the server to authenticate the user)
             mAccountManager.addAccountExplicitly(account, accountPassword, null);
+            mAccountManager.setAuthToken(account, mAuthTokenType, authtoken);
         } else {
             Log.d("provapp", TAG + "> finishLogin > setPassword");
             mAccountManager.setPassword(account, accountPassword);
