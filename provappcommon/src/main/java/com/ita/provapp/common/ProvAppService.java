@@ -33,7 +33,7 @@ public interface ProvAppService {
     Call<Product> getProduct(@Path("productId") String productId);
 
     @GET("products")
-    Call<List<Product>> listProduct();
+    Call<List<Product>> getProducts();
 
     @POST("orders")
     Call<ResponseBody> createOrder(@Header("Authorization") String token, @Body Order order);
